@@ -3,7 +3,8 @@ const router = express.Router();
 
 // Define routes
 router.get('/users', (req, res) => {
-  res.send('List of users');
+//   res.send('List of users');
+    res.json({ message: 'List of users' , users: [{name :'user1'}, {name: 'user2'}, {name: 'user3'}]});
 });
 
 router.get('/users/:id', (req, res) => {

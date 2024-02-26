@@ -26,4 +26,18 @@ router.delete('/users/:id', (req, res) => {
   res.send(`Delete user ${userId}`);
 });
 
+
+//actual appliation routes 
+  router.get('/expenses', (req, res) => {
+    res.json({ message: 'List of expenses', expenses: [{name :'expense1'}, {name: 'expense2'}, {name: 'expense3'}]});
+  });
+  router.post('/expenses', (req, res) => {
+    res.send('Create a new expense');
+  })
+  router.put('/expenses/:id', (req, res) => {
+    const expenseId = req.params.id;
+    res.send(`Update expense ${expenseId}`);
+  })
+
+
 module.exports = router;

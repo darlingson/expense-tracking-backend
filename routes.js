@@ -3,8 +3,8 @@ const router = express.Router();
 
 //read sqlite db by creating connection to the db file
 const sqlite3 = require('sqlite3').verbose();
-
 const db = new sqlite3.Database('db/expenses.db');
+
 
 
 // Define routes
@@ -46,6 +46,8 @@ router.delete('/users/:id', (req, res) => {
   });
   router.post('/expenses', (req, res) => {
     // res.send('Create a new expense');
+    console.log(req);
+    // console.log(res);
     const { name, amount, category, date, note } = req.body;
     db.run('INSERT INTO expenses (name, amount, category, date, note) VALUES (?, ?, ?, ?, ?)',
       [name, amount, category, date, note],

@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
+//read sqlite db by creating connection to the db file
+const sqlite3 = require('sqlite3').verbose();
+
+const db = new sqlite3.Database('db/expenses.db');
+
+
 // Define routes
 router.get('/users', (req, res) => {
 //   res.send('List of users');
@@ -29,7 +35,14 @@ router.delete('/users/:id', (req, res) => {
 
 //actual appliation routes 
   router.get('/expenses', (req, res) => {
-    res.json({ message: 'List of expenses', expenses: [{name :'expense1'}, {name: 'expense2'}, {name: 'expense3'}]});
+    // res.json({ message: 'List of expenses', expenses: [{name :'expense1'}, {name: 'expense2'}, {name: 'expense3'}]});
+    db.all('SELECT * FROM expenses', (err, rows) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Internal server error');
+      }
+      res.json({ message: 'List of expenses', expenses: rows });
+    })
   });
   router.post('/expenses', (req, res) => {
     res.send('Create a new expense');

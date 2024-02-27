@@ -45,7 +45,17 @@ router.delete('/users/:id', (req, res) => {
     })
   });
   router.post('/expenses', (req, res) => {
-    res.send('Create a new expense');
+    // res.send('Create a new expense');
+    const { name, amount, category, date, note } = req.body;
+    db.run('INSERT INTO expenses (name, amount, category, date, note) VALUES (?, ?, ?, ?, ?)',
+      [name, amount, category, date, note],
+      function(err) {
+        if (err) {
+          console.error(err);
+        }
+      }
+    );
+    res.json({ message: 'Expense created successfully' });
   })
   router.put('/expenses/:id', (req, res) => {
     const expenseId = req.params.id;

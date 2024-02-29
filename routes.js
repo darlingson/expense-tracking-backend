@@ -124,4 +124,10 @@ router.get("/expenses/search/:keyword", (req, res) =>{
     res.json({ message: 'List of expenses', expenses: rows });
   })
 })
+
+router.delete('/expenses/:id', (req, res) => {
+  const expenseId = req.params.id;
+  db.run(`DELETE from expenses where id = ${expenseId}`);
+  res.send(`Delete expense ${expenseId}`);
+})
 module.exports = router;

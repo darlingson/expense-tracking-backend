@@ -35,27 +35,25 @@ router.delete('/users/:id', (req, res) => {
 
 //actual appliation routes 
 router.get('/expenses', (req, res) => {
-  const page = parseInt(req.query.page);
-  const pageSize = parseInt(req.query.pageSize);
-  const startIndex = (page - 1) * pageSize;
-  const endIndex = page * pageSize;
+  console.log(req.query.pagesize);
     // res.json({ message: 'List of expenses', expenses: [{name :'expense1'}, {name: 'expense2'}, {name: 'expense3'}]});
     db.all('SELECT * FROM expenses', (err, rows) => {
       if (err) {
         console.error(err);
         res.status(500).send('Internal server error');
       }
-      if(req.query.page && req.query.pageSize){
+      if(req.query.page && req.query.pagesize){
         const page = parseInt(req.query.page);
-        const pageSize = parseInt(req.query.pageSize);
-        const startIndex = (page - 1) * pageSize;
-        const endIndex = page * pageSize;
+        const pagesize = parseInt(req.query.pagesize);
+        const startIndex = (page - 1) * pagesize;
+        const endIndex = page * pagesize;
 
         const paginatedExpenses = rows.slice(startIndex, endIndex);
-        const totalPages = Math.ceil(rows.length / pageSize);
+        const totalPages = Math.ceil(rows.length / pagesize);
         res.json({ products: paginatedExpenses, totalPages });
       }
-      res.json({ message: 'List of expenses', expenses: rows });
+      else 
+        res.json({ message: 'List of expenses', expenses: rows });
     })
   });
 

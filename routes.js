@@ -62,6 +62,18 @@ router.delete('/users/:id', (req, res) => {
     const expenseId = req.params.id;
     res.send(`Update expense ${expenseId}`);
   })
+  router.get('/expenses/:id', (req, res) =>{
+    const expenseId = req.params.id;
+    // const result = db.run(`SELECT * from expenses where id = ${expenseId}`)
+    // console.log(result)
+    db.all(`SELECT * from expenses where id = ${expenseId}`,(err, rows) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Internal server error');
+      }
+      res.json({ message: 'List of expenses', expenses: rows });
+    })
+  })
 
 
 module.exports = router;

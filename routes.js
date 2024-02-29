@@ -44,6 +44,7 @@ router.delete('/users/:id', (req, res) => {
       res.json({ message: 'List of expenses', expenses: rows });
     })
   });
+
   router.post('/expenses', (req, res) => {
     console.log(req.body);
     // console.log(res.body)
@@ -58,8 +59,20 @@ router.delete('/users/:id', (req, res) => {
     );
     res.json({ message: 'Expense created successfully' });
   })
+
   router.put('/expenses/:id', (req, res) => {
     const expenseId = req.params.id;
+    const { name, amount, category, date, note } = req.body;
+    db.run(`UPDATE expenses SET name = '${name}', amount = '${amount}', category = '${category}', date = '${date}', note = '${note}'`, (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Internal server error');
+      }
+      // res.json({ message: 'Expense updated successfully' });
+    })
+
+
+
     res.send(`Update expense ${expenseId}`);
   })
   router.get('/expenses/:id', (req, res) =>{

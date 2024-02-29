@@ -34,12 +34,26 @@ router.delete('/users/:id', (req, res) => {
 
 
 //actual appliation routes 
-  router.get('/expenses', (req, res) => {
+router.get('/expenses', (req, res) => {
+  const page = parseInt(req.query.page);
+  const pageSize = parseInt(req.query.pageSize);
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = page * pageSize;
     // res.json({ message: 'List of expenses', expenses: [{name :'expense1'}, {name: 'expense2'}, {name: 'expense3'}]});
     db.all('SELECT * FROM expenses', (err, rows) => {
       if (err) {
         console.error(err);
         res.status(500).send('Internal server error');
+      }
+      if(req.query.page && req.query.pageSize){
+        const page = parseInt(req.query.page);
+        const pageSize = parseInt(req.query.pageSize);
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = page * pageSize;
+
+        const paginatedExpenses = rows.slice(startIndex, endIndex);
+        const totalPages = Math.ceil(rows.length / pageSize);
+        res.json({ products: paginatedExpenses, totalPages });
       }
       res.json({ message: 'List of expenses', expenses: rows });
     })

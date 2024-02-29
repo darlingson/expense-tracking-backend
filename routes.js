@@ -45,6 +45,8 @@ router.delete('/users/:id', (req, res) => {
     })
   });
   router.post('/expenses', (req, res) => {
+    console.log(req.body);
+    console.log(res.body)
     const { name, amount, category, date, note } = req.body;
     db.run('INSERT INTO expenses (name, amount, category, date, note) VALUES (?, ?, ?, ?, ?)',
       [name, amount, category, date, note],

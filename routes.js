@@ -112,6 +112,16 @@ router.get("/expenses/date/:date", (req, res) =>{
       res.json({ message: 'List of expenses', expenses: rows });
     })
 })
-
-
+router.get("/expenses/search/:keyword", (req, res) =>{
+  const date = req.params.keyword;
+  // const result = db.run(`SELECT * from expenses where id = ${expenseId}`)
+  // console.log(result)
+  db.all(`SELECT * from expenses where name like '%${date}%'`,(err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal server error');
+    }
+    res.json({ message: 'List of expenses', expenses: rows });
+  })
+})
 module.exports = router;

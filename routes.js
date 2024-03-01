@@ -36,7 +36,6 @@ router.delete('/users/:id', (req, res) => {
 //actual appliation routes 
 router.get('/expenses', (req, res) => {
   console.log(req.query.pagesize);
-    // res.json({ message: 'List of expenses', expenses: [{name :'expense1'}, {name: 'expense2'}, {name: 'expense3'}]});
     db.all('SELECT * FROM expenses', (err, rows) => {
       if (err) {
         console.error(err);
@@ -59,7 +58,6 @@ router.get('/expenses', (req, res) => {
 
 router.post('/expenses', (req, res) => {
     console.log(req.body);
-    // console.log(res.body)
     const { name, amount, category, date, note } = req.body;
     db.run('INSERT INTO expenses (name, amount, category, date, note) VALUES (?, ?, ?, ?, ?)',
       [name, amount, category, date, note],
@@ -89,8 +87,6 @@ router.put('/expenses/:id', (req, res) => {
   })
 router.get('/expenses/:id', (req, res) =>{
     const expenseId = req.params.id;
-    // const result = db.run(`SELECT * from expenses where id = ${expenseId}`)
-    // console.log(result)
     db.all(`SELECT * from expenses where id = ${expenseId}`,(err, rows) => {
       if (err) {
         console.error(err);
@@ -102,8 +98,6 @@ router.get('/expenses/:id', (req, res) =>{
 
 router.get("/expenses/category/:category", (req, res) =>{
     const category = req.params.category;
-    // const result = db.run(`SELECT * from expenses where id = ${expenseId}`)
-    // console.log(result)
     db.all(`SELECT * from expenses where category = '${category}'`,(err, rows) => {
       if (err) {
         console.error(err);
@@ -114,8 +108,6 @@ router.get("/expenses/category/:category", (req, res) =>{
 })
 router.get("/expenses/date/:date", (req, res) =>{
     const date = req.params.date;
-    // const result = db.run(`SELECT * from expenses where id = ${expenseId}`)
-    // console.log(result)
     db.all(`SELECT * from expenses where date = '${date}'`,(err, rows) => {
       if (err) {
         console.error(err);
@@ -126,8 +118,6 @@ router.get("/expenses/date/:date", (req, res) =>{
 })
 router.get("/expenses/search/:keyword", (req, res) =>{
   const date = req.params.keyword;
-  // const result = db.run(`SELECT * from expenses where id = ${expenseId}`)
-  // console.log(result)
   db.all(`SELECT * from expenses where name like '%${date}%'`,(err, rows) => {
     if (err) {
       console.error(err);

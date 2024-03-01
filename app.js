@@ -1,3 +1,7 @@
+/**
+ * @file main file for the app
+ * @author Darlingson Makuwila <https://github.com/darlingson>
+ */
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');

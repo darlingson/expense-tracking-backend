@@ -1,3 +1,8 @@
+/** 
+ * @file Define routes for the api
+ * @author Darlingson Makuwila <https://github.com/darlingson>
+*/
+
 const express = require('express');
 const router = express.Router();
 
@@ -95,7 +100,6 @@ router.get('/expenses/:id', (req, res) =>{
       res.json({ message: 'List of expenses', expenses: rows });
     })
   })
-
 router.get("/expenses/category/:category", (req, res) =>{
     const category = req.params.category;
     db.all(`SELECT * from expenses where category = '${category}'`,(err, rows) => {

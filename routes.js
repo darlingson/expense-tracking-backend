@@ -163,7 +163,7 @@ router.put('/expenses/:id', (req, res) => {
       note: good
    }
    */
-router.get('/expenses/:id', (req, res) =>{
+router.get('/expenses/expense/:id', (req, res) =>{
     const expenseId = req.params.id;
     db.all(`SELECT * from expenses where id = ${expenseId}`,(err, rows) => {
       if (err) {
@@ -223,6 +223,18 @@ router.get("/expenses/search/:keyword", (req, res) =>{
     }
     res.json({ message: 'List of expenses', expenses: rows });
   })
+})
+router.get('/expenses/search?', (req, res) => {
+  // console.log(req.query.keyword);
+  const keyword = req.query.keyword;
+  db.all(`SELECT * from expenses where name like '%${keyword}%'`,(err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal server error');
+    }
+    res.json({ message: 'List of expenses', expenses: rows });
+  })
+  // res.send('List of expenses');
 })
 /**
  * @description Delete an expense

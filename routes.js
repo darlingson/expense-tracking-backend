@@ -224,9 +224,25 @@ router.get("/expenses/search/:keyword", (req, res) =>{
     res.json({ message: 'List of expenses', expenses: rows });
   })
 })
-router.get('/expenses/search?', (req, res) => {
-  // console.log(req.query.keyword);
+/**
+ * @description Search expenses
+ * @method GET
+ * @route /api/expenses/search?keyword
+ * @access Public
+ * @returns {JSON}
+*/
+router.get('/expenses/search', (req, res) => {
   const keyword = req.query.keyword;
+  if (keyword === undefined) {
+    db.all('SELECT * FROM expenses', (err, rows) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Internal server error');
+      }
+      res.json({ message: 'List of expenses', expenses: rows });
+    })
+  }
+  else {
   db.all(`SELECT * from expenses where name like '%${keyword}%'`,(err, rows) => {
     if (err) {
       console.error(err);
@@ -234,7 +250,7 @@ router.get('/expenses/search?', (req, res) => {
     }
     res.json({ message: 'List of expenses', expenses: rows });
   })
-  // res.send('List of expenses');
+  }
 })
 /**
  * @description Delete an expense
